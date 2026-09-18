@@ -9,6 +9,26 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+      - name: Send Email With AWS SES
+        run: |
+          aws ses send-email \
+          --from "mincoding@naver.com" \
+          --destination "ToAddresses=ji04230423@gmail.com" \
+          --message "Subject={Data=테스트 메일 전송},Body={Text={Data=안녕? KFC from GitHub Actions}}"
+
   build-1:
     runs-on: ubuntu-latest
     steps:
