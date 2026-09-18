@@ -67,7 +67,7 @@ jobs:
         run: echo "unit-test group ${{ matrix.test-group }}"
 
   deploy:
-    needs: [ integration-1, integration-2, lint, build-4 ]
+    needs: [ integration-1, integration-2, lint, unittest ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.1.0
